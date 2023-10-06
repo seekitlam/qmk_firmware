@@ -36,7 +36,7 @@ enum my_keycodes{
     ENCU = SAFE_RANGE,
     ENCD
 };
-
+ 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   bool shift_active = get_mods() & MOD_MASK_SHIFT;
   bool alt_active = get_mods() & MOD_MASK_ALT;
