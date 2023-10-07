@@ -36,7 +36,7 @@ enum my_keycodes{
     ENCU = SAFE_RANGE,
     ENCD
 };
- 
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   bool shift_active = get_mods() & MOD_MASK_SHIFT;
   bool alt_active = get_mods() & MOD_MASK_ALT;
@@ -96,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [MAC_FN] = LAYOUT_all(
-		RGB_TOG,KC_BRID, KC_BRIU, LGUI(KC_TAB), LGUI(KC_Z), KC_MAIL, LGUI(KC_D), KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, RESET, KC_SLEP, KC_NO, KC_MSTP,
+		RGB_TOG,KC_BRID, KC_BRIU, LGUI(KC_TAB), LGUI(KC_Z), KC_MAIL, LGUI(KC_D), KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, QK_BOOT, KC_SLEP, QK_RBT, KC_MSTP,
 		KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, KC_NO, KC_NO,
 		KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RGB_MOD, KC_NO, KC_NO, KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO,
 		KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_NO, KC_NO, KC_NO,
