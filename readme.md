@@ -19,4 +19,4 @@ After flashing with this firmware, QK_BOOT is mapped to the DEL key in the MAC_F
 
 ## Issues
 
-1. Some keys like KC_VOLU/KC_VOLD in MAC_FN layer stop working after resume in MacOS. Temporary solution is to reboot the keyboard. QK_RBT (resets the keyboard and oes not load the bootloader) is mapped to the top key next to the knob on MAC_FN layer. A convenient way to reboot the keyboard without replugging the cable.
+1. Some keys like KC_VOLU/KC_VOLD in MAC_FN layer stop working after resume in MacOS. Temporary solution is to reboot the keyboard. QK_RBT (resets the keyboard and does not load the bootloader) is mapped to the top key next to the knob on MAC_FN layer. A convenient way to reboot the keyboard without replugging the cable.
