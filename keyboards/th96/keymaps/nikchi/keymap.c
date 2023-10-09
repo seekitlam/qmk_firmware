@@ -27,54 +27,11 @@ enum tap{
   TD_CTCPS = 0,
   TD_SLNUM
 };
+
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CTCPS] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_CAPS),
     [TD_SLNUM] = ACTION_TAP_DANCE_DOUBLE(KC_PSLS, KC_NUM)
 };
-
-enum my_keycodes{
-    ENCU = SAFE_RANGE,
-    ENCD
-};
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  bool shift_active = get_mods() & MOD_MASK_SHIFT;
-  bool alt_active = get_mods() & MOD_MASK_ALT;
-  bool ctrl_active = get_mods() & MOD_MASK_CTRL;
-  switch (keycode) {
-    case ENCU:
-      if (record->event.pressed) {
-        if (shift_active) { //right arrows with shift
-            tap_code(KC_RGHT);
-        } else if (alt_active) { //alt tab defaults to next window
-            tap_code(KC_TAB);
-        } else if (ctrl_active) {
-            tap_code(KC_UP);
-        } else { //default volume down
-            tap_code(KC_VOLU);
-        }
-      } else {
-      }
-      return false; // Skip all further processing of this key
-    case ENCD:
-      if (record->event.pressed) {
-        if (shift_active) { //left arrow with shift
-            tap_code(KC_LEFT);
-        } else if (alt_active) { //alt tab but with one shot mod
-            add_oneshot_mods(MOD_MASK_SHIFT);
-            tap_code(KC_TAB);
-        } else if (ctrl_active) {
-            tap_code(KC_DOWN);
-        }  else { //default volume down
-            tap_code(KC_VOLD);
-        }
-      } else {
-      }
-      return false; // Skip all further processing of this key
-    default:
-        return true;
-  }
-}
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE] = LAYOUT_all(
@@ -135,13 +92,18 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return state;
 };
 
-#if defined(ENCODER_MAP_ENABLE)
-const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
-    [0] = { ENCODER_CCW_CW(ENCD, ENCU)},
-    [1] = { ENCODER_CCW_CW(KC_NO, KC_NO)},
-    [2] = { ENCODER_CCW_CW(KC_WH_D, KC_WH_U)},
-    [3] = { ENCODER_CCW_CW(RGB_RMOD, RGB_MOD)},
-};
+#ifdef ENCODER_ENABLE
+bool encoder_update_kb(uint8_t index, bool clockwise) {
+    if (!encoder_update_user(index, clockwise)) { return false; }
+
+	// Volume control
+	if (clockwise) {
+		tap_code(KC_VOLU);
+	} else {
+		tap_code(KC_VOLD);
+	}
+	return false;
+}
 #endif
 
 bool dip_switch_update_user(uint8_t index, bool active) {
@@ -156,3 +118,12 @@ bool dip_switch_update_user(uint8_t index, bool active) {
     return true;
 };
 
+#ifdef CONSOLE_ENABLE
+void keyboard_post_init_user(void) {
+  // Customise these values to desired behaviour
+  debug_enable=true;
+  debug_matrix=true;
+  //debug_keyboard=true;
+  //debug_mouse=true;
+}
+#endif
